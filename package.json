@@ -16,8 +16,10 @@
     "release:css": "stylus -c ./src/stylus/App.styl -o ./dist/bundle.css",
     "release:js": "browserify -t [ babelify --presets [ es2015 react ] ] ./src/js/App.js | uglifyjs > ./dist/bundle.js",
     "release:clean": "rimraf ./dist",
-    "release:copy": "cpx \"./src/**/{*.html,*.eot,*.svg,*.ttf,*.woff,package.json}\" ./dist",
-    "release": "npm-run-all -s release:clean release:copy -p release:css release:js"
+    "release:copy": "cpx \"./src/**/{*.html,*.eot,*.svg,*.ttf,*.woff,*.png,*.css,package.json}\" ./dist",
+    "release": "npm-run-all -s release:clean release:copy -p release:css release:js",
+    "serve:dist": "browser-sync start --server dist",
+    "serve": "npm-run-all -s release serve:dist"
   },
   "repository": {
     "type": "git",
@@ -47,6 +49,7 @@
     "watchify": "^3.6.1"
   },
   "dependencies": {
-    "parse": "^1.6.12"
+    "parse": "^1.6.12",
+    "vue": "^1.0.12"
   }
 }
