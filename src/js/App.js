@@ -2,29 +2,39 @@ import Util from './Util.js'
 
 var Parse = require('parse')
 var Vue = require('vue')
+Vue.config.debug = true
 
 // Application entry point
 window.onload = () => {
 
-  // var VisitorInfo = require('../component/visitor-info/visitor-info.js');
-  // Vue.component("visitor-info", {
-  //   template: '<div>hoge</div>'
-  // })
-  // new Vue({
-  //   el: "#visitor-list"
-  // })
+  // init Parse
+  Parse.initialize("Ikzt3vnq6LwIKSb4WDP8RkOcUW3wRlsQuLUlrrFN", "mQTMG00TR3azol0UmAT6IIUH0uWFtppRDqDjNS5h");
 
-  // 定義する
-  var VisitorInfo = Vue.extend({
-    template: '#visitor-info-template'
-  })
-
-  // 登録する
-  Vue.component('visitor-info', VisitorInfo)
+  // コンポーネント登録
+  Vue.component('visitor-info', require('../component/visitor-info.js'))
 
   // root インスタンスを作成する
-  new Vue({
-    el: '#visitor-list'
+  var vm = new Vue({
+    el: '#list',
+    data: {
+      visitorInfoList: null
+    },
+    created: function() { // ここはアローファンクションにするとthisがvmを指さなくなる。
+
+      var query = new Parse.Query('VisitorInfo')
+      query.descending('createdAt')
+      query.include('member')
+
+      query.find()
+      .then((results) => {
+
+        this.visitorInfoList = results
+      },
+      (error: any) => {
+        console.error(error)
+      });
+
+    }
   })
 
 
@@ -32,13 +42,5 @@ window.onload = () => {
   const date = Util.formatDate();
   console.log( '[' + date + '] Application was launched.' );
 
-  // init Parse
-  Parse.initialize("Ikzt3vnq6LwIKSb4WDP8RkOcUW3wRlsQuLUlrrFN", "mQTMG00TR3azol0UmAT6IIUH0uWFtppRDqDjNS5h");
-
-  var TestObject = Parse.Object.extend("TestObject");
-  var testObject = new TestObject();
-  testObject.save({foo: "bar"}).then(function(object) {
-    console.log("yay! Parse worked");
-  });
 
 };

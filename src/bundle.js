@@ -19398,6 +19398,14 @@ module.exports = Vue;
 },{"_process":1}],78:[function(require,module,exports){
 'use strict';
 
+module.exports = {
+  template: '#visitor-info-template',
+  props: ['visitorInfo']
+};
+
+},{}],79:[function(require,module,exports){
+'use strict';
+
 var _Util = require('./Util.js');
 
 var _Util2 = _interopRequireDefault(_Util);
@@ -19406,45 +19414,46 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var Parse = require('parse');
 var Vue = require('vue');
+Vue.config.debug = true;
 
 // Application entry point
 window.onload = function () {
 
-  // var VisitorInfo = require('../component/visitor-info/visitor-info.js');
-  // Vue.component("visitor-info", {
-  //   template: '<div>hoge</div>'
-  // })
-  // new Vue({
-  //   el: "#visitor-list"
-  // })
+  // init Parse
+  Parse.initialize("Ikzt3vnq6LwIKSb4WDP8RkOcUW3wRlsQuLUlrrFN", "mQTMG00TR3azol0UmAT6IIUH0uWFtppRDqDjNS5h");
 
-  // 定義する
-  var VisitorInfo = Vue.extend({
-    template: '#visitor-info-template'
-  });
-
-  // 登録する
-  Vue.component('visitor-info', VisitorInfo);
+  // コンポーネント登録
+  Vue.component('visitor-info', require('../component/visitor-info.js'));
 
   // root インスタンスを作成する
-  new Vue({
-    el: '#visitor-list'
+  var vm = new Vue({
+    el: '#list',
+    data: {
+      visitorInfoList: null
+    },
+    created: function created() {
+      var _this = this;
+
+      // ここはアローファンクションにするとthisがvmを指さなくなる。
+
+      var query = new Parse.Query('VisitorInfo');
+      query.descending('createdAt');
+      query.include('member');
+
+      query.find().then(function (results) {
+
+        _this.visitorInfoList = results;
+      }, function (error) {
+        console.error(error);
+      });
+    }
   });
 
   var date = _Util2.default.formatDate();
   console.log('[' + date + '] Application was launched.');
-
-  // init Parse
-  Parse.initialize("Ikzt3vnq6LwIKSb4WDP8RkOcUW3wRlsQuLUlrrFN", "mQTMG00TR3azol0UmAT6IIUH0uWFtppRDqDjNS5h");
-
-  var TestObject = Parse.Object.extend("TestObject");
-  var testObject = new TestObject();
-  testObject.save({ foo: "bar" }).then(function (object) {
-    console.log("yay! Parse worked");
-  });
 };
 
-},{"./Util.js":79,"parse":2,"vue":77}],79:[function(require,module,exports){
+},{"../component/visitor-info.js":78,"./Util.js":80,"parse":2,"vue":77}],80:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -19512,5 +19521,5 @@ var Util = (function () {
 
 exports.default = Util;
 
-},{}]},{},[78])
+},{}]},{},[79])
 //# sourceMappingURL=bundle.js.map
