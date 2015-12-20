@@ -31,7 +31,7 @@
 
 
     <link rel="stylesheet" href="bundle.css">
-    <script src="bundle.js"></script>  
+    <script src="bundle.js"></script>
 
 </head>
 <body>
@@ -64,7 +64,25 @@
         </div>
     </div>
 
-    <div id="list" class="pure-u-1">
+    <div class="pure-u-1">
+        <div id="visitor-list" v-for="visotorInfo in visitorInfoList">
+          <visitor-info></visitor-info>
+        </div>
+        <script id="visitor-info-template" type="text/template">
+          <div class="email-item email-item-selected pure-g">
+              <div class="pure-u">
+                  <img class="email-avatar" alt="Tilo Mitra&#x27;s avatar" height="64" width="64" src="img/common/tilo-avatar.png">
+              </div>
+
+              <div class="pure-u-3-4">
+                  <h5 class="email-name">Tilo Mitra</h5>
+                  <h4 class="email-subject">Hello from Toronto</h4>
+                  <p class="email-desc">
+                      Hey, I just wanted to check in with you from Toronto. I got here earlier today.
+                  </p>
+              </div>
+          </div>
+        </script>
         <div class="email-item email-item-selected pure-g">
             <div class="pure-u">
                 <img class="email-avatar" alt="Tilo Mitra&#x27;s avatar" height="64" width="64" src="img/common/tilo-avatar.png">

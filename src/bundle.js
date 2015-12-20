@@ -19405,10 +19405,31 @@ var _Util2 = _interopRequireDefault(_Util);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Parse = require('parse');
-require('vue');
+var Vue = require('vue');
 
 // Application entry point
 window.onload = function () {
+
+  // var VisitorInfo = require('../component/visitor-info/visitor-info.js');
+  // Vue.component("visitor-info", {
+  //   template: '<div>hoge</div>'
+  // })
+  // new Vue({
+  //   el: "#visitor-list"
+  // })
+
+  // 定義する
+  var VisitorInfo = Vue.extend({
+    template: '#visitor-info-template'
+  });
+
+  // 登録する
+  Vue.component('visitor-info', VisitorInfo);
+
+  // root インスタンスを作成する
+  new Vue({
+    el: '#visitor-list'
+  });
 
   var date = _Util2.default.formatDate();
   console.log('[' + date + '] Application was launched.');
@@ -19419,7 +19440,7 @@ window.onload = function () {
   var TestObject = Parse.Object.extend("TestObject");
   var testObject = new TestObject();
   testObject.save({ foo: "bar" }).then(function (object) {
-    alert("yay! it worked");
+    console.log("yay! Parse worked");
   });
 };
 
