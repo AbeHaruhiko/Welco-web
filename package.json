@@ -46,7 +46,8 @@
     "rimraf": "^2.4.4",
     "stylus": "^0.52.4",
     "uglify-js": "^2.6.1",
-    "watchify": "^3.6.1"
+    "watchify": "^3.6.1",
+    "webpack": "^1.12.2"
   },
   "dependencies": {
     "parse": "^1.6.12",
