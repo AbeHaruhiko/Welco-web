@@ -1,5 +1,5 @@
 <template>
-<div class="email-item email-item-selected pure-g">
+<div class="email-item pure-g" @click="selectVisitorInfo" :class="[ isSelected ? 'email-item-unread' : 'email-item-selected' ]">
     <div class="pure-u">
         <img class="email-avatar" alt="Tilo Mitra&#x27;s avatar" height="64" width="64" src="/img/common/tilo-avatar.png">
     </div>
@@ -17,7 +17,21 @@
 <script>
 export default {
     props: {
-        visitorInfo: {}
+        visitorInfo: {},
+        isSelected: false
+        // isUnselected: true
+    },
+    methods: {
+        selectVisitorInfo: function() {
+            console.debug('clicked')
+
+            // 全行を一旦非選択状態にする。
+            // 親のイベントを呼び出す。
+            this.$dispatch('clearSelection', null)
+
+            this.isSelected = true
+            // this.isUnselected = false
+        }
     }
 }
 </script>

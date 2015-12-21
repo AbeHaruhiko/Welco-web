@@ -9,9 +9,13 @@ module.exports = {
   module: {
     loaders: [
         {
+            test: /\.vue$/,
+            loader: 'vue'
+        },
+        {
             test: /\.js$/,
             exclude: /node_modules/,
-            loader: "babel-loader",
+            loader: "babel",
             query: {
                 presets: [ 'es2015' ]
             }
@@ -19,8 +23,17 @@ module.exports = {
         {
             test: /\.html$/,
             exclude: /node_modules/,
-            loader: "html-loader"
+            loader: "html"
         }
     ]
+  }
+  ,
+  vue: {
+      loaders: {
+        js: 'babel'
+      }
+  },
+  babel: {
+      presets: ['es2015']
   }
 };

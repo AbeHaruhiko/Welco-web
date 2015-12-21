@@ -2,6 +2,9 @@ import Util from './Util.js'
 
 import Parse from 'parse'
 import Vue from 'vue'
+import _ from 'lodash'
+
+import VisitorInfo from '../component/visitor-info.vue'
 
 Vue.config.debug = true
 
@@ -12,7 +15,7 @@ window.onload = () => {
   Parse.initialize("Ikzt3vnq6LwIKSb4WDP8RkOcUW3wRlsQuLUlrrFN", "mQTMG00TR3azol0UmAT6IIUH0uWFtppRDqDjNS5h");
 
   // コンポーネント登録
-  Vue.component('visitor-info', require('../component/visitor-info.js'))
+  Vue.component('visitor-info', VisitorInfo)
 
   // root インスタンスを作成する
   var vm = new Vue({
@@ -35,6 +38,13 @@ window.onload = () => {
         console.error(error)
       });
 
+    },
+    events: {
+        'clearSelection': function() {
+            _.forEach(this.$children, function(visitorInfo) {
+                visitorInfo.isSelected = false;
+            })
+        }
     }
   })
 
