@@ -8,8 +8,19 @@ module.exports = {
   devtool: "inline-source-map",
   module: {
     loaders: [
-        {test: /\.js$/, exclude: /node_modules/, loader: "babel-loader", query: { presets: [ 'es2015' ] }},
-        {test: /\.html$/, exclude: /node_modules/, loader: "html-loader"}
+        {
+            test: /\.js$/,
+            exclude: /node_modules/,
+            loader: "babel-loader",
+            query: {
+                presets: [ 'es2015' ]
+            }
+        },
+        {
+            test: /\.html$/,
+            exclude: /node_modules/,
+            loader: "html-loader"
+        }
     ]
   }
 };
