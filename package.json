@@ -11,7 +11,7 @@
     "build:js": "browserify -t [ babelify --presets [ es2015 react ] ] ./src/js/App.js -d | exorcist ./src/bundle.js.map > ./src/bundle.js",
     "watch:css": "stylus -c -w ./src/stylus/App.styl -o ./src/bundle.css -m --sourcemap-root ./stylus",
     "watch:js": "webpack --progress --colors",
-    "watch:server": "webpack-dev-server --progress --colors --inline --content-base src/",
+    "watch:server": "webpack-dev-server --progress --colors --inline --hot --content-base src/",
     "watch": "npm-run-all -p watch:css watch:js watch:server",
     "release:css": "stylus -c ./src/stylus/App.styl -o ./dist/bundle.css",
     "release:js": "browserify -t [ babelify --presets [ es2015 react ] ] ./src/js/App.js | uglifyjs > ./dist/bundle.js",
