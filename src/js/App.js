@@ -32,7 +32,7 @@ window.onload = () => {
       query.find()
       .then((results) => {
 
-        this.visitorInfoList = results
+        this.visitorInfoList = this.parseObjArrayToJsonArray(results)
       },
       (error) => {
         console.error(error)
