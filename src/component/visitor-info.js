@@ -1,5 +1,5 @@
 module.exports = {
-  template: '#visitor-info-template',
+  template: require('html!./visitor-info.html'),
   props: [
     'visitorInfo'
   ]

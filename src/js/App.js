@@ -1,7 +1,8 @@
 import Util from './Util.js'
 
-var Parse = require('parse')
-var Vue = require('vue')
+import Parse from 'parse'
+import Vue from 'vue'
+
 Vue.config.debug = true
 
 // Application entry point
@@ -30,7 +31,7 @@ window.onload = () => {
 
         this.visitorInfoList = results
       },
-      (error: any) => {
+      (error) => {
         console.error(error)
       });
 

@@ -1,4 +1,3 @@
-
 /**
  * Provide a utility method.
  */
