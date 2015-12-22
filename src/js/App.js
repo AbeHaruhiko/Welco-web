@@ -4,6 +4,7 @@ import Parse from 'parse'
 import Vue from 'vue'
 import _ from 'lodash'
 
+import VisitorInfoList from '../component/visitor-info-list.vue'
 import VisitorInfo from '../component/visitor-info.vue'
 
 Vue.config.debug = true
@@ -15,13 +16,14 @@ window.onload = () => {
   Parse.initialize("Ikzt3vnq6LwIKSb4WDP8RkOcUW3wRlsQuLUlrrFN", "mQTMG00TR3azol0UmAT6IIUH0uWFtppRDqDjNS5h");
 
   // コンポーネント登録
+  Vue.component('visitor-info-list', VisitorInfoList)
   Vue.component('visitor-info', VisitorInfo)
 
   // root インスタンスを作成する
   var vm = new Vue({
-    el: '#list',
+    el: '#layout',
     data: {
-      visitorInfoList: null
+      visitorInfoList: []
     },
     created: function() { // ここはアローファンクションにするとthisがvmを指さなくなる。
 
@@ -30,17 +32,21 @@ window.onload = () => {
       query.include('member')
 
       query.find()
-      .then((results) => {
+      .then(function(results) {
+        _.forEach(results, function(result) {
+            vm.$children[0].visitorInfoList.push(result.toJSON())
 
-        this.visitorInfoList = this.parseObjArrayToJsonArray(results)
+        })
       },
-      (error) => {
+      function(error) {
         console.error(error)
       });
 
     },
     events: {
         'clearSelection': function() {
+            // 親（このコンポーネントのvisitorInfoList）はisSelectedは持っていない。
+            // よって子のプロパティを変更する。（後で変えるかも）
             _.forEach(this.$children, function(visitorInfo) {
                 visitorInfo.isSelected = false;
             })
