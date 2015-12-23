@@ -5,6 +5,7 @@
 </template>
 
 <script>
+"use strict";
 import VisitorInfoListItem from '../component/visitor-info-list-item.vue'
 
 export default {
@@ -16,6 +17,7 @@ export default {
     },
     created: function() {
         this.visitorInfoList = [];
+        console.log(store)
     }
 }
 </script>

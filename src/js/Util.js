@@ -1,3 +1,4 @@
+"use strict"
 /**
  * Provide a utility method.
  */
