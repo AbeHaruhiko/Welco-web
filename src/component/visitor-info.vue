@@ -10,9 +10,7 @@
             </div>
 
             <div class="email-content-controls pure-u-1-2">
-                <button class="secondary-button pure-button">Reply</button>
-                <button class="secondary-button pure-button">Forward</button>
-                <button class="secondary-button pure-button">Move to</button>
+                <button class="secondary-button pure-button" @click="setRead">確認済みにする</button>
             </div>
         </div>
 
@@ -40,6 +38,9 @@
 
 <script>
 "use strict";
+
+import Parse from 'parse'
+
 export default {
     props: {
         store: {}
@@ -49,6 +50,16 @@ export default {
       console.log(this.store)
     },
     methods: {
+      setRead: function() {
+        console.log('setRead called.')
+        this.store.state.currentVisitorInfo.className = 'VisitorInfo'
+        var parseVisitorInfo = Parse.Object.fromJSON(this.store.state.currentVisitorInfo)
+        parseVisitorInfo.set('read', true)
+        parseVisitorInfo.save()
+        .then(function() {
+          console.log('saved.')
+        })
+      }
     }
 }
 </script>
