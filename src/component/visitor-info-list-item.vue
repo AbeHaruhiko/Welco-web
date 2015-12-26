@@ -1,5 +1,5 @@
 <template>
-<div class="email-item pure-g" @click="selectVisitorInfo" :class="[ isSelected ? 'email-item-selected' : '' ]">
+<div class="email-item pure-g" @click="selectVisitorInfo" :class="[ visitorInfo === store.state.currentVisitorInfo ? 'email-item-selected' : '' ]">
     <div class="pure-u">
         <img class="email-avatar" alt="Tilo Mitra&#x27;s avatar" height="64" width="64" src="/img/common/tilo-avatar.png">
     </div>
@@ -18,8 +18,9 @@
 "use strict";
 export default {
     props: {
+        store: {},
         visitorInfo: {},
-        isSelected: false
+        // isSelected: false
     },
     methods: {
         selectVisitorInfo: function() {
@@ -27,9 +28,10 @@ export default {
 
             // 全行を一旦非選択状態にする。
             // 親のイベントを呼び出す。
-            this.$dispatch('clearSelection', null)
+            // this.$dispatch('clearSelection', null)
 
-            this.isSelected = true
+            // this.isSelected = true
+            this.store.state.currentVisitorInfo = this.visitorInfo
         }
     }
 }

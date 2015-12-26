@@ -1,6 +1,6 @@
 <template>
 <div id="list" class="pure-u-1">
-    <visitor-info-list-item v-for="visitorInfo in privateVisitorInfoList" :visitor-info="visitorInfo"></visitor-info-list-item>
+    <visitor-info-list-item v-for="visitorInfo in store.state.visitorInfoList" :visitor-info="visitorInfo" :store="store"></visitor-info-list-item>
 </div>
 </template>
 
@@ -10,14 +10,14 @@ import VisitorInfoListItem from '../component/visitor-info-list-item.vue'
 
 export default {
     props: {
-        privateVisitorInfoList: [],
+        // privateVisitorInfoList: [],
         store: {}
     },
     components: {
         VisitorInfoListItem
     },
     created: function() {
-        this.privateVisitorInfoList = this.store.getVisitorInfoList();
+        // this.privateVisitorInfoList = this.store.getVisitorInfoList();
         console.log(this.store)
     }
 }

@@ -8,9 +8,7 @@ import _ from 'lodash'
 import VisitorInfoList from '../component/visitor-info-list.vue'
 import VisitorInfo from '../component/visitor-info.vue'
 
-import ActionCreator from "./flux/ActionCreator"
-import Store from "./flux/Store"
-import EventEmitter from "./flux/EventEmitter"
+import Store from './Store.js'
 
 Vue.config.debug = true
 
@@ -21,23 +19,18 @@ Parse.initialize("Ikzt3vnq6LwIKSb4WDP8RkOcUW3wRlsQuLUlrrFN", "mQTMG00TR3azol0UmA
 Vue.component('visitor-info-list', VisitorInfoList)
 Vue.component('visitor-info', VisitorInfo)
 
-var dispatcher = new EventEmitter();
-var action = new ActionCreator(dispatcher);
-var store = new Store(dispatcher);
+var store = Store
 
 // root インスタンスを作成する
 var vm = new Vue({
     el: '#layout',
     data: {
-        visitorInfoList: [],     // storeにも置くので冗長だけど・・・
+        // privateVisitorInfoList: [],     // storeにも置くので冗長だけど・・・
         store: store
     },
     created: function() { // ここはアローファンクションにするとthisがvmを指さなくなる。
 
-        this.visitorInfoList = store.getVisitorInfoList()
-        store.on("CHANGE", () => {
-            this._onChange()
-        })
+        // this.visitorInfoList = store.getVisitorInfoList()
 
         var query = new Parse.Query('VisitorInfo')
         query.descending('createdAt')
@@ -46,9 +39,9 @@ var vm = new Vue({
         query.find()
         .then((results) => {    // arrowにしないとthisがvmを指さない
             _.forEach(results, (result) => {
-                this.visitorInfoList.push(result.toJSON())
+                this.store.state.visitorInfoList.push(result.toJSON())
             })
-            action.setVisitorInfoList(this.visitorInfoList)
+            // store.visitorInfoList = this.privateVisitorInfoList;
         },
         function(error) {
             console.error(error)
@@ -56,20 +49,15 @@ var vm = new Vue({
 
     },
     events: {
-        'clearSelection': function() {
-            // 親（このコンポーネントのvisitorInfoList）はisSelectedは持っていない。
-            // よって子のプロパティを変更する。（後で変えるかも）
-            _.forEach(this.$children, function(visitorInfo) {
-                this.visitorInfo.isSelected = false;
-            })
-        }
+        // 'clearSelection': function() {
+        //     // 親（このコンポーネントのvisitorInfoList）はisSelectedは持っていない。
+        //     // よって子のプロパティを変更する。（後で変えるかも）
+        //     _.forEach(this.$children, function(visitorInfo) {
+        //         visitorInfo.isSelected = false;
+        //     })
+        // }
     },
     methods: {
-        _onChange (){
-            console.trace()
-            this.count = store.getCount()
-            this.visitorInfoList = store.getVisitorInfoList();
-        }
     }
 })
 
