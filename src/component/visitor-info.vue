@@ -58,9 +58,15 @@ export default {
             return moment(this.store.state.currentVisitorInfo.updatedAt).format('YYYY/MM/DD HH:mm')
         },
         companyNameUrl: function() {
+            if (!this.store.state.currentVisitorInfo.company) {
+                return ''
+            }
             return this.store.state.currentVisitorInfo.company.url
         },
         visitorNameUrl: function() {
+            if (!this.store.state.currentVisitorInfo.visitor) {
+                return ''
+            }
             return this.store.state.currentVisitorInfo.visitor.url
         }
     },
