@@ -10,40 +10,59 @@
             </div>
 
             <div class="email-content-controls pure-u-1-2">
-                <button class="secondary-button pure-button" @click="setRead">確認済みにする</button>
+                <button v-if="!store.state.currentVisitorInfo.read"
+                    class="secondary-button pure-button"
+                    @click="setRead">
+                    確認済みにする
+                </button>
+                <p v-else>
+                    {{ dateOfRead }} 確認
+                </p>
             </div>
         </div>
 
         <div class="email-content-body">
             <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                <img class="signature" v-bind:src="companyNameUrl" alt="会社名"/>
             </p>
             <p>
-                Duis aute irure dolor in reprehenderit in voluptate velit essecillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </p>
-            <p>
-                Aliquam ac feugiat dolor. Proin mattis massa sit amet enim iaculis tincidunt. Mauris tempor mi vitae sem aliquet pharetra. Fusce in dui purus, nec malesuada mauris. Curabitur ornare arcu quis mi blandit laoreet. Vivamus imperdiet fermentum mauris, ac posuere urna tempor at. Duis pellentesque justo ac sapien aliquet egestas. Morbi enim mi, porta eget ullamcorper at, pharetra id lorem.
-            </p>
-            <p>
-                Donec sagittis dolor ut quam pharetra pretium varius in nibh. Suspendisse potenti. Donec imperdiet, velit vel adipiscing bibendum, leo eros tristique augue, eu rutrum lacus sapien vel quam. Nam orci arcu, luctus quis vestibulum ut, ullamcorper ut enim. Morbi semper erat quis orci aliquet condimentum. Nam interdum mauris sed massa dignissim rhoncus.
-            </p>
-            <p>
-                Regards,<br>
-                Tilo
+                <img class="signature" v-bind:src="visitorNameUrl" alt="氏名"/>
             </p>
         </div>
     </div>
 </div>
 </template>
 
+<style>
+.signature {
+    width: 50%;
+    height: auto;
+    border: 1px gray solid;
+}
+</style>
+
 <script>
 "use strict";
 
 import Parse from 'parse'
+import { findParseVisitorInfoList } from '../component/parse-visitor-info.js'
+
+import moment from 'moment'
 
 export default {
     props: {
         store: {}
+    },
+    computed: {
+        dateOfRead: function() {
+            return moment(this.store.state.currentVisitorInfo.updatedAt).format('YYYY/MM/DD HH:mm')
+        },
+        companyNameUrl: function() {
+            return this.store.state.currentVisitorInfo.company.url
+        },
+        visitorNameUrl: function() {
+            return this.store.state.currentVisitorInfo.visitor.url
+        }
     },
     created: function() {
       console.log('visitor-info created.')
@@ -52,12 +71,17 @@ export default {
     methods: {
       setRead: function() {
         console.log('setRead called.')
-        this.store.state.currentVisitorInfo.className = 'VisitorInfo'
+
+        this.store.state.currentVisitorInfo.className = 'VisitorInfo'   // classNameがないと保存できない
+        this.store.state.currentVisitorInfo.read = true                 // 確認済み（表示変更用）
         var parseVisitorInfo = Parse.Object.fromJSON(this.store.state.currentVisitorInfo)
-        parseVisitorInfo.set('read', true)
+        parseVisitorInfo.set('read', true)  // fromJSONではreadなどのプロパティがフィールドにならないので手動でセット
         parseVisitorInfo.save()
-        .then(function() {
-          console.log('saved.')
+        .then((result) => {
+            console.log('saved.')
+        }, (error) => {
+            console.log('save failed.')
+            this.store.state.currentVisitorInfo.read = false    // 保存に失敗したので表示を戻す。
         })
       }
     }

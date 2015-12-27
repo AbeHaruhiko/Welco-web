@@ -7,6 +7,7 @@ import _ from 'lodash'
 
 import VisitorInfoList from '../component/visitor-info-list.vue'
 import VisitorInfo from '../component/visitor-info.vue'
+import { findParseVisitorInfoList } from '../component/parse-visitor-info.js'
 
 import Store from './Store.js'
 
@@ -32,11 +33,12 @@ var vm = new Vue({
 
         // this.visitorInfoList = store.getVisitorInfoList()
 
-        var query = new Parse.Query('VisitorInfo')
-        query.descending('createdAt')
-        query.include('member')
-
-        query.find()
+        // var query = new Parse.Query('VisitorInfo')
+        // query.descending('createdAt')
+        // query.include('member')
+        //
+        // query.find()
+        findParseVisitorInfoList()
         .then((results) => {    // arrowにしないとthisがvmを指さない
             _.forEach(results, (result) => {
                 this.store.state.visitorInfoList.push(result.toJSON())

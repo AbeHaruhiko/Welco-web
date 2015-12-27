@@ -29,7 +29,7 @@ export default {
         visitorInfo: {},
         // isSelected: false
     },
-    data: {
+    data: function() {
     },
     computed: {
         // 一覧の選択状態
