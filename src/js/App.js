@@ -3,11 +3,8 @@ import Util from './Util.js'
 
 import Parse from 'parse'
 import Vue from 'vue'
+import VueRouter from 'vue-router'
 import _ from 'lodash'
-
-// import VisitorInfoList from '../component/visitor-info-list.vue'
-// import VisitorInfoItem from '../component/visitor-info-item.vue'
-// import { findParseVisitorInfoList } from '../component/parse-visitor-info.js'
 
 import VisitorInfoContainer from '../component/visitor-info-container.vue'
 
@@ -19,53 +16,32 @@ Vue.config.debug = true
 Parse.initialize("Ikzt3vnq6LwIKSb4WDP8RkOcUW3wRlsQuLUlrrFN", "mQTMG00TR3azol0UmAT6IIUH0uWFtppRDqDjNS5h")
 
 // コンポーネント登録
-// Vue.component('visitor-info-list', VisitorInfoList)
-// Vue.component('visitor-info-item', VisitorInfoItem)
 Vue.component('visitor-info-container', VisitorInfoContainer)
 
 var store = Store
 
-// root インスタンスを作成する
-var vm = new Vue({
-    el: '#content',
-    data: {
-        // privateVisitorInfoList: [],     // storeにも置くので冗長だけど・・・
-        store: store
-    },
-    // created: function() { // ここはアローファンクションにするとthisがvmを指さなくなる。
-    //
-    //     // this.visitorInfoList = store.getVisitorInfoList()
-    //
-    //     // var query = new Parse.Query('VisitorInfo')
-    //     // query.descending('createdAt')
-    //     // query.include('member')
-    //     //
-    //     // query.find()
-    //     findParseVisitorInfoList()
-    //     .then((results) => {    // arrowにしないとthisがvmを指さない
-    //         _.forEach(results, (result) => {
-    //             this.store.state.visitorInfoList.push(result.toJSON())
-    //         })
-    //         // store.visitorInfoList = this.privateVisitorInfoList;
-    //     },
-    //     function(error) {
-    //         console.error(error)
-    //     });
-    //
-    // },
-    // events: {
-    //     // 'clearSelection': function() {
-    //     //     // 親（このコンポーネントのvisitorInfoList）はisSelectedは持っていない。
-    //     //     // よって子のプロパティを変更する。（後で変えるかも）
-    //     //     _.forEach(this.$children, function(visitorInfo) {
-    //     //         visitorInfo.isSelected = false;
-    //     //     })
-    //     // }
-    // },
-    // methods: {
-    // }
+// routerプラグインインストール
+Vue.use(VueRouter)
+
+// router インスタンスを作成。
+var router = new VueRouter()
+
+// いくつかの routes を定義します
+router.map({
+    '/visitorinfo': {
+        component: VisitorInfoContainer
+    }
 })
 
+
+// root インスタンスを作成する
+var App = Vue.extend({
+    data: function() {
+        return { store: store }
+    }
+})
+
+router.start(App, '#content')
 
 
 const date = Util.formatDate();

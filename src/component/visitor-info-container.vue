@@ -41,7 +41,9 @@ import { findParseVisitorInfoList } from '../component/parse-visitor-info.js'
 
 export default {
 
-    el: '#layout',
+    el: function() {
+        return '#layout'
+    },
     props: {
         // privateVisitorInfoList: [],     // storeにも置くので冗長だけど・・・
         store: {}
