@@ -6,7 +6,7 @@ import Vue from 'vue'
 import _ from 'lodash'
 
 import VisitorInfoList from '../component/visitor-info-list.vue'
-import VisitorInfo from '../component/visitor-info.vue'
+import VisitorInfoItem from '../component/visitor-info-item.vue'
 import { findParseVisitorInfoList } from '../component/parse-visitor-info.js'
 
 import Store from './Store.js'
@@ -18,7 +18,7 @@ Parse.initialize("Ikzt3vnq6LwIKSb4WDP8RkOcUW3wRlsQuLUlrrFN", "mQTMG00TR3azol0UmA
 
 // コンポーネント登録
 Vue.component('visitor-info-list', VisitorInfoList)
-Vue.component('visitor-info', VisitorInfo)
+Vue.component('visitor-info', VisitorInfoItem)
 
 var store = Store
 
