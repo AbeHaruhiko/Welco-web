@@ -23,10 +23,10 @@
 
         <div class="email-content-body">
             <p>
-                <img class="signature" v-bind:src="companyNameUrl" alt="会社名"/>
+                <img v-if="companyNameUrl" class="signature" :src="companyNameUrl" alt="会社名"/>
             </p>
             <p>
-                <img class="signature" v-bind:src="visitorNameUrl" alt="氏名"/>
+                <img v-if="visitorNameUrl" class="signature" :src="visitorNameUrl" alt="氏名"/>
             </p>
         </div>
     </div>
