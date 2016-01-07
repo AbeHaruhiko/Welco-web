@@ -36,11 +36,12 @@
 <body>
 
 
-
-
-<div id="content">
-    <visitor-info-container :store="store"></visitor-info-container>
-</div>
+<app>
+    <a v-link="{ path: '/visitorinfo' }">Go to Visitorinfo</a>
+    <a v-link="{ path: '/foo' }">Go to Foo</a>
+    <a v-link="{ path: '/bar' }">Go to Bar</a>
+    <router-view :store="store"></router-view>
+</app>
 
 <script src="http://yui.yahooapis.com/3.17.2/build/yui/yui-min.js"></script>
 
