@@ -23,48 +23,18 @@ var router = new VueRouter({
     history: true
 })
 
-
-var Foo = Vue.extend({
-    template: '<p>This is foo!</p>'
-})
-
-var Bar = Vue.extend({
-    template: '<p>This is bar!</p>'
-})
-
-
 // routes を定義します
 router.map({
     '/visitorinfo': {
-        data: function() {
-            return { store: store }
-        },
         component: VisitorInfoContainer
     },
-    '/foo': {
-        // data: function() {
-        //     return { store: store }
-        // },
-        component: Foo
-    },
-    '/bar': {
-        // data: function() {
-        //     return { store: store }
-        // },
-        component: Bar
-    }
 })
-
 
 // root インスタンスを作成する
 var App = Vue.extend({
     data: function() {
         return { store: store }
     }
-    // components: {
-    //     'visitor-info-container': VisitorInfoContainer
-    // },
-    // template: '<router-view></router-view>'
 })
 
 // 第二引数のelementをAppでリプレイスする。
