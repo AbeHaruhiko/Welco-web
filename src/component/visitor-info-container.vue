@@ -29,6 +29,8 @@
 
 </template>
 
+<style src="../css/layouts/email.css"></style>
+
 
 <script>
 "use strict";

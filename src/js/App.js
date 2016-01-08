@@ -8,6 +8,8 @@ import _ from 'lodash'
 
 import VisitorInfoContainer from '../component/visitor-info-container.vue'
 import Login from '../component/login.vue'
+import Signup from '../component/signup.vue'
+import NotFound from '../component/not-found.vue'
 
 import store from './Store.js'
 
@@ -32,19 +34,27 @@ router.map({
     },
     '/login': {
         component: Login
+    },
+    '/signup': {
+        component: Signup
+    },
+    '*': {
+        component: NotFound
     }
 })
 
 // 認証
 router.beforeEach(function (transition) {
-  if (transition.to.auth) {
-    // 認証処理
-    if (Parse.User.current()) {
-        transition.next()
-    } else {
-        transition.redirect('/login')
+    if (transition.to.auth) {
+        // 認証処理
+        if (Parse.User.current()) {
+            transition.next()
+        } else {
+            transition.redirect('/login')
+        }
     }
-  }
+    // qiita これがないとnext()やredirect()で遷移しない（URLだけ書き換わる）
+    return true
 })
 
 // root インスタンスを作成する

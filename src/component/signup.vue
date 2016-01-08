@@ -11,14 +11,17 @@
                     <label for="name">ユーザー名</label>
                     <input id="name" type="text" placeholder="ユーザー名">
 
+                    <label for="email">メールアドレス</label>
+                    <input id="email" type="email" placeholder="メールアドレス">
+
 
                     <label for="password">パスワード</label>
                     <input id="password" type="password" placeholder="パスワード">
 
-                    <button class="primary-button pure-button">ログイン</button>
+                    <button class="primary-button pure-button">ユーザー登録</button>
                 </fieldset>
                 <fieldset>
-                    <button class="secondary-button pure-button" v-link="'/signup'">アカウントがない場合はこちらから新規登録</button>
+                    <button class="secondary-button pure-button" v-link="'/login'">アカウントをお持ちの場合はここからログイン</button>
                 </fieldset>
             </form>
         </div>
