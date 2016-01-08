@@ -36,16 +36,16 @@ router.map({
 })
 
 // 認証
-// router.beforeEach(function (transition) {
-//   if (transition.to.auth) {
-//     // 認証処理
-//     // if (Parse.User.current()) {
-//     //     transition.next()
-//     // } else {
-//     //     transition.redirect('/login')
-//     // }
-//   }
-// })
+router.beforeEach(function (transition) {
+  if (transition.to.auth) {
+    // 認証処理
+    if (Parse.User.current()) {
+        transition.next()
+    } else {
+        transition.redirect('/login')
+    }
+  }
+})
 
 // root インスタンスを作成する
 var App = Vue.extend({
