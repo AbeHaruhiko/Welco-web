@@ -7,6 +7,7 @@ import VueRouter from 'vue-router'
 import _ from 'lodash'
 
 import VisitorInfoContainer from '../component/visitor-info-container.vue'
+import Login from '../component/login.vue'
 
 import store from './Store.js'
 
@@ -26,9 +27,25 @@ var router = new VueRouter({
 // routes を定義します
 router.map({
     '/visitorinfo': {
-        component: VisitorInfoContainer
+        component: VisitorInfoContainer,
+        auth: true
     },
+    '/login': {
+        component: Login
+    }
 })
+
+// 認証
+// router.beforeEach(function (transition) {
+//   if (transition.to.auth) {
+//     // 認証処理
+//     // if (Parse.User.current()) {
+//     //     transition.next()
+//     // } else {
+//     //     transition.redirect('/login')
+//     // }
+//   }
+// })
 
 // root インスタンスを作成する
 var App = Vue.extend({
@@ -38,7 +55,7 @@ var App = Vue.extend({
 })
 
 // 第二引数のelementをAppでリプレイスする。
-router.start(App, 'app')
+router.start(App, '#app')
 
 
 const date = Util.formatDate();
