@@ -9,13 +9,14 @@
                 <fieldset>
 
                     <label for="name">ユーザー名</label>
-                    <input id="name" type="text" placeholder="ユーザー名">
+                    <input id="name" type="text" placeholder="ユーザー名" v-model="username">
 
 
                     <label for="password">パスワード</label>
-                    <input id="password" type="password" placeholder="パスワード">
+                    <input id="password" type="password" placeholder="パスワード" v-model="password">
 
-                    <button class="primary-button pure-button">ログイン</button>
+                    <!-- qiita(.prevent) -->
+                    <button class="primary-button pure-button" @click.prevent="logIn">ログイン</button>
                 </fieldset>
                 <fieldset>
                     <button class="secondary-button pure-button" v-link="'/signup'">アカウントがない場合はこちらから新規登録</button>
@@ -29,3 +30,29 @@
 </template>
 
 <style src="../css/layouts/marketing.css"></style>
+
+<script>
+"use strict";
+
+import Parse from 'parse'
+
+export default {
+    data: {
+        username: '',
+        password: ''
+    },
+    methods: {
+        logIn: function() {
+            const _this = this      // thenの中で使うために退避
+            Parse.User.logIn(this.username, this.password)
+            .then(function(user) {
+                console.log('log in succeed.')
+                _this.$route.router.go('/visitorinfo')
+            },
+            function(error) {
+                console.error(error)
+            });
+        }
+    }
+}
+</script>
