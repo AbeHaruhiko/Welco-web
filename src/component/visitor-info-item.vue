@@ -10,13 +10,13 @@
             </div>
 
             <div class="email-content-controls pure-u-1-2">
-                <button v-if="!store.state.currentVisitorInfo.read"
+                <button v-if="!store.state.currentVisitorInfo.readBy"
                     class="secondary-button pure-button"
                     @click="setRead">
                     確認済みにする
                 </button>
                 <p v-else>
-                    {{ dateOfRead }} 確認
+                    {{ dateOfRead + ' ' + readBy }} 確認
                 </p>
             </div>
         </div>
@@ -54,8 +54,11 @@ export default {
         store: {}
     },
     computed: {
+        readBy: function() {
+            return this.store.state.currentVisitorInfo.readBy.name
+        },
         dateOfRead: function() {
-            return moment(this.store.state.currentVisitorInfo.updatedAt).format('YYYY/MM/DD HH:mm')
+            return moment(this.store.state.currentVisitorInfo.readAt).format('YYYY/MM/DD')
         },
         companyNameUrl: function() {
             if (!this.store.state.currentVisitorInfo.company) {
@@ -79,9 +82,10 @@ export default {
         console.log('setRead called.')
 
         this.store.state.currentVisitorInfo.className = 'VisitorInfo'   // classNameがないと保存できない
-        this.store.state.currentVisitorInfo.read = true                 // 確認済み（表示変更用）
+        this.store.state.currentVisitorInfo.readBy = Parse.User.current().get('member')                   // 確認済み（表示変更用）
         var parseVisitorInfo = Parse.Object.fromJSON(this.store.state.currentVisitorInfo)
-        parseVisitorInfo.set('read', true)  // fromJSONではreadなどのプロパティがフィールドにならないので手動でセット
+        parseVisitorInfo.set('readBy', Parse.User.current().get('member'))  // fromJSONではreadなどのプロパティがフィールドにならないので手動でセット
+        parseVisitorInfo.set('readAt', new Date())  // fromJSONではreadなどのプロパティがフィールドにならないので手動でセット
         parseVisitorInfo.save()
         .then((result) => {
             console.log('saved.')
