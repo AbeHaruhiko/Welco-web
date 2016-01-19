@@ -42,7 +42,7 @@ export default {
         },
         // VisitorInfoの確認済/未
         classReadState: function() {
-            if (this.visitorInfo.read) {
+            if (this.visitorInfo.readBy) {
                 return 'email-item-read'
             } else {
                 return 'email-item-unread'

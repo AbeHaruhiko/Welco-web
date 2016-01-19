@@ -45,6 +45,10 @@ router.map({
 
 // 認証
 router.beforeEach(function (transition) {
+    if (transition.to.path === '/') {
+        transition.redirect('/visitorinfo')
+        return true
+    }
     if (transition.to.auth) {
         // 認証処理
         if (Parse.User.current()) {

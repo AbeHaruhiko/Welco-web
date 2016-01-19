@@ -2,6 +2,7 @@
 export default {
     state: {
       visitorInfoList: [],
-      currentVisitorInfo: null
+      currentVisitorInfo: null,
+      memberList: []
     }
 }
