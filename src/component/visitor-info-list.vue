@@ -7,6 +7,7 @@
 <script>
 "use strict";
 import VisitorInfoListItem from '../component/visitor-info-list-item.vue'
+import { findParseVisitorInfoList } from '../component/parse-visitor-info.js'
 
 export default {
     props: {
@@ -19,6 +20,18 @@ export default {
     created: function() {
         // this.privateVisitorInfoList = this.store.getVisitorInfoList();
         console.log(this.store)
+
+        findParseVisitorInfoList()
+        .then((results) => {    // arrowにしないとthisがvmを指さない
+            _.forEach(results, (result) => {
+                this.store.state.visitorInfoList.push(result.toJSON())
+            })
+            // store.visitorInfoList = this.privateVisitorInfoList;
+        },
+        function(error) {
+            console.error(error)
+        });
+
     }
 }
 </script>

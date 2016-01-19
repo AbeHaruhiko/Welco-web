@@ -63,7 +63,7 @@
 import MemberListDd from '../component/member-list-dd.vue'
 import VisitorInfoList from '../component/visitor-info-list.vue'
 import VisitorInfoItem from '../component/visitor-info-item.vue'
-import { findParseVisitorInfoList } from '../component/parse-visitor-info.js'
+// import { findParseVisitorInfoList } from '../component/parse-visitor-info.js'
 
 import { menu } from '../js/menus.js'
 
@@ -89,16 +89,16 @@ export default {
         // query.include('member')
         //
         // query.find()
-        findParseVisitorInfoList()
-        .then((results) => {    // arrowにしないとthisがvmを指さない
-            _.forEach(results, (result) => {
-                this.store.state.visitorInfoList.push(result.toJSON())
-            })
-            // store.visitorInfoList = this.privateVisitorInfoList;
-        },
-        function(error) {
-            console.error(error)
-        });
+        // findParseVisitorInfoList()
+        // .then((results) => {    // arrowにしないとthisがvmを指さない
+        //     _.forEach(results, (result) => {
+        //         this.store.state.visitorInfoList.push(result.toJSON())
+        //     })
+        //     // store.visitorInfoList = this.privateVisitorInfoList;
+        // },
+        // function(error) {
+        //     console.error(error)
+        // });
     },
     ready: function() {
         // drop down menus
