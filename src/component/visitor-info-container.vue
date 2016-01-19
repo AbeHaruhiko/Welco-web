@@ -4,7 +4,7 @@
             <a href="#" class="nav-menu-button">Menu</a>
 
             <div class="nav-inner">
-                <button class="primary-button pure-button"><i class="fa fa-sign-out"></i> ログアウト</button>
+                <button class="primary-button pure-button" @click.prevent="logOut"><i class="fa fa-sign-out"></i> ログアウト</button>
 
                 <!-- <div class="pure-menu">
                     <ul class="pure-menu-list">
@@ -60,6 +60,8 @@
 <script>
 "use strict";
 
+import Parse from 'parse'
+
 import MemberListDd from '../component/member-list-dd.vue'
 import VisitorInfoList from '../component/visitor-info-list.vue'
 import VisitorInfoItem from '../component/visitor-info-item.vue'
@@ -83,6 +85,13 @@ export default {
     events: {
     },
     methods: {
+        logOut: function() {
+            const _this = this
+            Parse.User.logOut()
+            .then(() => {
+                _this.$route.router.go('/login')
+            })
+        }
     },
     components: {
         MemberListDd,

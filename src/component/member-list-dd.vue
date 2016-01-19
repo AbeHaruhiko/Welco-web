@@ -35,6 +35,8 @@ export default {
         store: {}
     },
     created: function() {
+        // 一旦クリア
+        // this.store.state.memberList = []
         var query = new Parse.Query('Member')
         query.descending('dispOrder')
 

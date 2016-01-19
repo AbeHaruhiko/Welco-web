@@ -91,6 +91,7 @@ export default {
             console.log('saved.')
         }, (error) => {
             console.log('save failed.')
+            // TODO: このthisはvueコンポーネントを指していないかも。
             this.store.state.currentVisitorInfo.read = false    // 保存に失敗したので表示を戻す。
         })
       }
