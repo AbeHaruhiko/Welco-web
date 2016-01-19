@@ -15,6 +15,15 @@
 </div>
 </template>
 
+<style>
+.pure-menu-children {
+    background-color: rgb(75, 113, 151);
+}
+#nav .pure-menu-children {
+    color: #fff;
+    margin-left: 0.5em;
+}
+</style>
 <script>
 "use strict";
 
