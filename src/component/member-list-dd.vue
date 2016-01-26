@@ -2,15 +2,15 @@
 <div class="pure-menu pure-menu-horizontal">
     <ul class="pure-menu-list">
         <li class="pure-menu-item pure-menu-has-children">
-            <a href="#" id="menuLink1" class="pure-menu-link">社員絞り込み</a>
+            <a href="#" id="menuLink1" class="pure-menu-link">{{ selectedMemberName }}</a>
             <ul class="pure-menu-children">
                 <li class="pure-menu-item">
-                    <a href="#" class="pure-menu-link" @click="filterVisitorInfoListByMember()">すべて</a>
+                    <a href="#" class="pure-menu-link" @click.prevent.stop="filterVisitorInfoListByMember()">すべて</a>
                 </li>
                 <li
                     class="pure-menu-item"
                     v-for="member in store.state.memberList">
-                    <a href="#" class="pure-menu-link" @click="filterVisitorInfoListByMember(member)">{{ member.name }}</a>
+                    <a href="#" class="pure-menu-link" @click.prevent.stop="filterVisitorInfoListByMember(member)">{{ member.name }}</a>
                 </li>
             </ul>
         </li>
@@ -40,12 +40,11 @@ export default {
         store: {}
     },
     created: function() {
+
+        this.$set('store.state.selectedMember', null)
+
         // 一旦クリア
         this.store.state.memberList = []
-
-        // // 「すべて」を追加
-        // const allMember = new Parse.Object('Member')
-        // this.store.state.visitorInfoList.push({ name: 'すべて'})
 
         var query = new Parse.Query('Member')
         query.descending('dispOrder')
@@ -61,8 +60,16 @@ export default {
         });
 
     },
+    computed: {
+        selectedMemberName: function() {
+            return this.store.state.selectedMember ? this.store.state.selectedMember.name : '社員絞り込み'
+        }
+    },
     methods: {
         filterVisitorInfoListByMember: function(member) {
+
+            this.store.state.selectedMember = member
+
             // 一旦クリア
             this.store.state.visitorInfoList = []
 
@@ -82,6 +89,9 @@ export default {
             function(error) {
                 console.error(error)
             })
+
+            // DDクローズ
+            document.getElementById('menuLink1').click()
         }
     }
 }

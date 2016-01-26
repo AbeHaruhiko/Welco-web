@@ -32,18 +32,6 @@
                     </ul>
                 </div> -->
                 <member-list-dd :store="store"></member-list-dd>
-                <div class="pure-menu pure-menu-horizontal">
-                    <ul class="pure-menu-list">
-                        <li class="pure-menu-item pure-menu-has-children">
-                            <a href="#" id="menuLink1" class="pure-menu-link">Contact</a>
-                            <ul class="pure-menu-children">
-                                <li class="pure-menu-item"><a href="#" class="pure-menu-link">Email</a></li>
-                                <li class="pure-menu-item"><a href="#" class="pure-menu-link">Twitter</a></li>
-                                <li class="pure-menu-item"><a href="#" class="pure-menu-link">Tumblr Blog</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
             </div>
         </div>
 
