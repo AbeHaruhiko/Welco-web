@@ -1,6 +1,7 @@
 <template>
 <div id="list" class="pure-u-1">
-    <visitor-info-list-item v-for="visitorInfo in store.state.visitorInfoList" :visitor-info="visitorInfo" :store="store"></visitor-info-list-item>
+    <!-- qiita -->
+    <visitor-info-list-item v-for="visitorInfo in store.state.visitorInfoList | filterBy store.state.selectedMember.objectId in 'member.objectId' | status store.state.selectedStatus.status" :visitor-info="visitorInfo" :store="store"></visitor-info-list-item>
 </div>
 </template>
 
@@ -17,8 +18,16 @@ export default {
     components: {
         VisitorInfoListItem
     },
+    // computed: {
+    //     selectedStatus: function() {
+    //         if (this.store.state.currentState) {
+    //             return this.store.state.currentState.state
+    //         } else {
+    //             return
+    //         }
+    //     }
+    // },
     created: function() {
-        // this.privateVisitorInfoList = this.store.getVisitorInfoList();
         console.log(this.store)
 
         findParseVisitorInfoList()

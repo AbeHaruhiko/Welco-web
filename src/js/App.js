@@ -13,6 +13,8 @@ import NotFound from '../component/not-found.vue'
 
 import store from './Store.js'
 
+import { statusFilter } from '../filter/status-filter.js'
+
 Vue.config.debug = true
 
 // init Parse
@@ -20,6 +22,9 @@ Parse.initialize("Ikzt3vnq6LwIKSb4WDP8RkOcUW3wRlsQuLUlrrFN", "mQTMG00TR3azol0UmA
 
 // routerプラグインインストール
 Vue.use(VueRouter)
+
+// filter登録
+Vue.filter('status', statusFilter)
 
 // router インスタンスを作成。
 var router = new VueRouter({

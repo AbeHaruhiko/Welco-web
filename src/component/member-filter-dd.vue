@@ -2,15 +2,15 @@
 <div class="pure-menu pure-menu-horizontal">
     <ul class="pure-menu-list">
         <li class="pure-menu-item pure-menu-has-children">
-            <a href="#" id="menuLink1" class="pure-menu-link">{{ selectedMemberName }}</a>
+            <a href="#" id="memberFilterDd" class="pure-menu-link">{{ selectedMemberName }}</a>
             <ul class="pure-menu-children">
                 <li class="pure-menu-item">
-                    <a href="#" class="pure-menu-link" @click.prevent.stop="filterVisitorInfoListByMember()">すべて</a>
+                    <a href="#" class="pure-menu-link" @click.prevent.stop="selectMember()">すべて</a>
                 </li>
                 <li
                     class="pure-menu-item"
                     v-for="member in store.state.memberList">
-                    <a href="#" class="pure-menu-link" @click.prevent.stop="filterVisitorInfoListByMember(member)">{{ member.name }}</a>
+                    <a href="#" class="pure-menu-link" @click.prevent.stop="selectMember(member)">{{ member.name }}</a>
                 </li>
             </ul>
         </li>
@@ -41,14 +41,13 @@ export default {
     },
     created: function() {
 
+        // qiita
         this.$set('store.state.selectedMember', null)
 
         // 一旦クリア
         this.store.state.memberList = []
-
         var query = new Parse.Query('Member')
         query.descending('dispOrder')
-
         query.find()
         .then((results) => {    // arrowにしないとthisがvmを指さない
             _.forEach(results, (result) => {
@@ -58,40 +57,19 @@ export default {
         function(error) {
             console.error(error)
         });
-
     },
     computed: {
         selectedMemberName: function() {
-            return this.store.state.selectedMember ? this.store.state.selectedMember.name : '社員絞り込み'
+            return this.store.state.selectedMember ? this.store.state.selectedMember.name : '社員'
         }
     },
     methods: {
-        filterVisitorInfoListByMember: function(member) {
+        selectMember: function(member) {
 
             this.store.state.selectedMember = member
 
-            // 一旦クリア
-            this.store.state.visitorInfoList = []
-
-            let memberJSON
-            if (member) {
-                member.className = 'Member'     // classNameがないと保存できない
-                memberJSON = Parse.Object.fromJSON(member)
-            }
-            findParseVisitorInfoList(memberJSON)
-            .then((results) => {    // arrowにしないとthisがvmを指さない
-                this.store.state.visitorInfoList = []
-                _.forEach(results, (result) => {
-                    this.store.state.visitorInfoList.push(result.toJSON())
-                })
-                // store.visitorInfoList = this.privateVisitorInfoList;
-            },
-            function(error) {
-                console.error(error)
-            })
-
             // DDクローズ
-            document.getElementById('menuLink1').click()
+            document.getElementById('memberFilterDd').click()
         }
     }
 }

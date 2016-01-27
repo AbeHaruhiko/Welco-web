@@ -31,7 +31,8 @@
                         </li>
                     </ul>
                 </div> -->
-                <member-list-dd :store="store"></member-list-dd>
+                <member-filter-dd :store="store"></member-filter-dd>
+                <status-filter-dd :store="store"></status-filter-dd>
             </div>
         </div>
 
@@ -50,7 +51,8 @@
 
 import Parse from 'parse'
 
-import MemberListDd from '../component/member-list-dd.vue'
+import MemberFilterDd from '../component/member-filter-dd.vue'
+import StatusFilterDd from '../component/status-filter-dd.vue'
 import VisitorInfoList from '../component/visitor-info-list.vue'
 import VisitorInfoItem from '../component/visitor-info-item.vue'
 
@@ -82,7 +84,8 @@ export default {
         }
     },
     components: {
-        MemberListDd,
+        MemberFilterDd,
+        StatusFilterDd,
         VisitorInfoList,
         VisitorInfoItem
     }
