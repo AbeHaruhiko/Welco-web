@@ -28,7 +28,7 @@ Vue.filter('status', statusFilter)
 
 // router インスタンスを作成。
 var router = new VueRouter({
-    history: true
+    history: false
 })
 
 // routes を定義します
@@ -46,6 +46,10 @@ router.map({
     '*': {
         component: NotFound
     }
+})
+
+router.redirect({
+    '/': '/visitorinfo'
 })
 
 // 認証
