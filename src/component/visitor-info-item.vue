@@ -34,7 +34,7 @@
 </template>
 
 <style>
-.signature {
+#main .signature {
     width: 50%;
     height: auto;
     border: 1px gray solid;

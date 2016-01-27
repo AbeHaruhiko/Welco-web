@@ -7,22 +7,36 @@
         classReadState
     ]"
 >
-    <div class="pure-u">
+    <!-- <div class="pure-u">
         <img class="email-avatar" alt="Tilo Mitra&#x27;s avatar" height="64" width="64" src="/img/common/tilo-avatar.png">
-    </div>
+    </div> -->
 
     <div class="pure-u-3-4">
-        <h5 class="email-name">{{ visitorInfo.member.name }}</h5>
-        <h4 class="email-subject">Hello from Toronto</h4>
-        <p class="email-desc">
-            Hey, I just wanted to check in with you from Toronto. I got here earlier today.
-        </p>
+        <h5 class="email-name" style="display: inline;">{{ visitorInfo.member.name }}</h5>
+        <span class="time-of-visitation" style="float: right;">{{ timeOfVisitation }}</span>
+        <div style="clear: both;"></div>
+        <img v-if="companyNameUrl" class="signature" :src="companyNameUrl" alt="会社名" />
+        <img v-if="visitorNameUrl" class="signature" :src="visitorNameUrl" alt="氏名" />
     </div>
 </div>
 </template>
 
+<style>
+.email-item  .signature {
+    width: 45%;
+    height: auto;
+    border: 1px gray solid;
+}
+.time-of-visitation {
+    font-size: 0.6em;
+}
+</style>
+
 <script>
 "use strict";
+
+import moment from 'moment'
+
 export default {
     props: {
         store: {},
@@ -47,6 +61,21 @@ export default {
             } else {
                 return 'email-item-unread'
             }
+        },
+        timeOfVisitation: function() {
+            return moment(this.visitorInfo.createdAt).format('YYYY/MM/DD HH:mm')
+        },
+        companyNameUrl: function() {
+            if (!this.visitorInfo.company) {
+                return ''
+            }
+            return this.visitorInfo.company.url
+        },
+        visitorNameUrl: function() {
+            if (!this.visitorInfo.visitor) {
+                return ''
+            }
+            return this.visitorInfo.visitor.url
         }
     },
     methods: {
