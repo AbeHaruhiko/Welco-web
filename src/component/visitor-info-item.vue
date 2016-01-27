@@ -3,9 +3,11 @@
     <div class="email-content">
         <div class="email-content-header pure-g">
             <div class="pure-u-1-2">
-                <h1 class="email-content-title">Hello from Toronto</h1>
                 <p class="email-content-subtitle">
-                    From <a>{{ store.state.currentVisitorInfo.member ? store.state.currentVisitorInfo.member.name : '' }}</a> at <span>3:56pm, April 3, 2012</span>
+                    面会者： <a>{{ store.state.currentVisitorInfo.member ? store.state.currentVisitorInfo.member.name : '' }}</a>
+                </p>
+                <p class="email-content-subtitle">
+                    来社時刻：<span>{{ timeOfVisitation }}</span>
                 </p>
             </div>
 
@@ -54,6 +56,9 @@ export default {
         store: {}
     },
     computed: {
+        timeOfVisitation: function() {
+            return moment(this.store.state.currentVisitorInfo.createdAt).format('YYYY/MM/DD HH:mm')
+        },
         readBy: function() {
             return this.store.state.currentVisitorInfo.readBy.name
         },
