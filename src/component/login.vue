@@ -7,6 +7,9 @@
         <div class="l-box-lrg pure-u-1 pure-u-md-3-5">
             <form class="pure-form pure-form-stacked">
                 <fieldset>
+                    <p v-if="emailNotVerified" class="error-message">
+                        メールアドレス確認のメールを送信しました。<br/>メールに記載されたURLをクリックして登録を完了してください。
+                    </p>
 
                     <label for="name">ユーザー名</label>
                     <input id="name" type="text" placeholder="ユーザー名" v-model="username">
@@ -40,6 +43,11 @@ export default {
     data: {
         username: '',
         password: ''
+    },
+    computed: {
+        emailNotVerified: function() {
+            return Parse.User.current() && !Parse.User.current().get('emailVerified')
+        }
     },
     methods: {
         logIn: function() {

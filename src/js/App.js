@@ -63,7 +63,7 @@ router.beforeEach(function (transition) {
     }
     if (transition.to.auth) {
         // 認証処理
-        if (Parse.User.current()) {
+        if (Parse.User.current() && Parse.User.current().get('emailVerified')) {
             transition.next()
         } else {
             transition.redirect('/login')
