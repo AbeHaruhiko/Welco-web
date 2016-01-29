@@ -26,8 +26,6 @@
         <div class="email-content-body">
             <p>
                 <img v-if="companyNameUrl" class="signature" :src="companyNameUrl" alt="会社名"/>
-            </p>
-            <p>
                 <img v-if="visitorNameUrl" class="signature" :src="visitorNameUrl" alt="氏名"/>
             </p>
         </div>
@@ -37,7 +35,7 @@
 
 <style>
 #main .signature {
-    width: 50%;
+    width: 45%;
     height: auto;
     border: 1px gray solid;
 }

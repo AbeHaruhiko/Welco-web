@@ -4,6 +4,8 @@ import Util from './Util.js'
 import Parse from 'parse'
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import VueValidator from 'vue-validator'
+
 import _ from 'lodash'
 
 import VisitorInfoContainer from '../component/visitor-info-container.vue'
@@ -20,8 +22,9 @@ Vue.config.debug = true
 // init Parse
 Parse.initialize("Ikzt3vnq6LwIKSb4WDP8RkOcUW3wRlsQuLUlrrFN", "mQTMG00TR3azol0UmAT6IIUH0uWFtppRDqDjNS5h")
 
-// routerプラグインインストール
+// ラグインインストール
 Vue.use(VueRouter)
+Vue.use(VueValidator)
 
 // filter登録
 Vue.filter('status', statusFilter)
